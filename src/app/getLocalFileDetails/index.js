@@ -26,21 +26,14 @@ const getLocalFileDetails = ({
                     filePath,
                     compression,
                 })
-                const normalizedFilePath = normalizeFilenames
-                    ? // remove matched capture groups
-                      filePath
-                          // find all matching segments
-                          .split(normalizeFilenames)
-                          .reduce(
-                              (partiallyNormalizedPath, matchingSegment) =>
-                                  // remove matching segment from normalized path
-                                  partiallyNormalizedPath.replace(
-                                      matchingSegment,
-                                      '',
-                                  ),
-                              filePath,
-                          )
-                    : filePath
+
+                let normalizedFilePath = filePath
+                if (normalizeFilenames) {
+                    const matches = filePath.match(normalizeFilenames)
+                    if (matches) {
+                        normalizedFilePath = filePath.replace(matches[1], '')
+                    }
+                }
 
                 if (size) {
                     fileDetails[normalizedFilePath] = {

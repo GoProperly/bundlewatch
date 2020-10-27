@@ -121,7 +121,7 @@ describe(`bundlewatch Node API`, () => {
             )
         })
 
-        it.skip(`ignores files that don't match normalizeFilenames`, async () => {
+        it(`ignores files that don't match normalizeFilenames`, async () => {
             const result = await bundlewatchApi({
                 files: [
                     {
