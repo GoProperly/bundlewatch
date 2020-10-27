@@ -1,10 +1,10 @@
 {
-    "name": "bundlewatch",
-    "version": "0.0.0",
+    "name": "@goproperly/bundlewatch",
+    "version": "1.0.0",
     "description": "Keep watch of your bundle size",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bundlewatch/bundlewatch.git"
+        "url": "git+https://github.com/goproperly/bundlewatch.git"
     },
     "main": "lib/app/index.js",
     "bin": {
@@ -30,7 +30,7 @@
         "build",
         "maxSize"
     ],
-    "author": "bundlewatch",
+    "author": "goproperly",
     "license": "MIT",
     "dependencies": {
         "axios": "^0.19.0",
