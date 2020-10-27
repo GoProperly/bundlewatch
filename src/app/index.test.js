@@ -103,21 +103,39 @@ describe(`bundlewatch Node API`, () => {
         expect(error).toMatchSnapshot()
     })
 
-    it('Normalizes hash when given a normalizeFilenames option', async () => {
-        const result = await bundlewatchApi({
-            files: [
-                {
-                    path: './__testdata__/*.js',
-                    maxSize: '100kB',
-                },
-            ],
-            defaultCompression: 'none',
-            normalizeFilenames: '^.+?(\\.\\w+)\\.(?:js|css)$',
+    describe('normalizeFilenames option', () => {
+        it('replaces hash', async () => {
+            const result = await bundlewatchApi({
+                files: [
+                    {
+                        path: './__testdata__/test-hash*.js',
+                        maxSize: '100kB',
+                    },
+                ],
+                defaultCompression: 'none',
+                normalizeFilenames: '^.+?(\\.\\w+)\\.(?:js|css)$',
+            })
+
+            expect(result.fullResults[0].filePath).toMatchInlineSnapshot(
+                `"./__testdata__/test-hash.js"`,
+            )
         })
 
-        delete result.url
-        expect(result.fullResults[0].filePath).toMatchInlineSnapshot(
-            `"./__testdata__/test.bundle.js"`,
-        )
+        it.skip(`ignores files that don't match normalizeFilenames`, async () => {
+            const result = await bundlewatchApi({
+                files: [
+                    {
+                        path: './__testdata__/test-nohash*.js',
+                        maxSize: '100kB',
+                    },
+                ],
+                defaultCompression: 'none',
+                normalizeFilenames: '^.+?(\\.\\w+)\\.(?:js|css)$',
+            })
+
+            expect(result.fullResults[0].filePath).toMatchInlineSnapshot(
+                `"./__testdata__/test-nohash.js"`,
+            )
+        })
     })
 })
